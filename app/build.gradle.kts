@@ -51,18 +51,19 @@ android {
     }
 }
 
+val ktorVersion: String by project
+
 dependencies {
 
     implementation("io.insert-koin:koin-androidx-compose:3.4.6")
     implementation("org.slf4j:slf4j-android:1.7.36")
 
-    val ktor_version = "2.3.3"
 
-    implementation("io.ktor:ktor-client-core:$ktor_version")
-    implementation("io.ktor:ktor-client-okhttp:$ktor_version")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
-    implementation("io.ktor:ktor-client-logging:$ktor_version")
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
 
     implementation("io.realm.kotlin:library-base:1.10.0")
     implementation("io.realm.kotlin:library-sync:1.10.0")
@@ -70,8 +71,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
     implementation("io.coil-kt:coil-compose:2.4.0")
-
-    implementation("me.saket.swipe:swipe:1.2.0")
 
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.compose.material:material")
