@@ -1,5 +1,6 @@
-package com.github.mkoshikov.homecamera.screens
+package com.github.mkoshikov.homecamera.screen
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -16,8 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.github.mkoshikov.homecamera.R
-import com.github.mkoshikov.homecamera.models.MainScreenTab
-import com.github.mkoshikov.homecamera.models.MainViewModel
+import com.github.mkoshikov.homecamera.model.MainScreenTab
+import com.github.mkoshikov.homecamera.model.MainViewModel
+import com.github.mkoshikov.homecamera.screen.main.MainScreenCamerasTab
+import com.github.mkoshikov.homecamera.screen.main.MainScreenDoorsTab
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -52,26 +55,15 @@ fun MainScreen(model: MainViewModel = koinViewModel()) {
                 }
             }
         }
-    ) {
-        it
+    ) { padding ->
+        Crossfade(
+            targetState = model.tab,
+            label = "main_tabs"
+            ) {
+            when(it) {
+                MainScreenTab.Cameras -> MainScreenCamerasTab(padding)
+                MainScreenTab.Doors -> MainScreenDoorsTab(padding)
+            }
+        }
     }
 }
-
-private val AppBarHeight = 56.dp
-
-// TODO: this should probably be part of the touch target of the start and end icons, clarify this
-private val AppBarHorizontalPadding = 4.dp
-
-// Start inset for the title when there is no navigation icon provided
-private val TitleInsetWithoutIcon = Modifier.width(16.dp - AppBarHorizontalPadding)
-
-// Start inset for the title when there is a navigation icon provided
-private val TitleIconModifier = Modifier
-    .fillMaxHeight()
-    .width(72.dp - AppBarHorizontalPadding)
-
-// The gap on all sides between the FAB and the cutout
-private val BottomAppBarCutoutOffset = 8.dp
-
-// How far from the notch the rounded edges start
-private val BottomAppBarRoundedEdgeRadius = 4.dp

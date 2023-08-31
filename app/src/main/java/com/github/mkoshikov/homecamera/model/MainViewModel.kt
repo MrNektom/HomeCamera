@@ -1,4 +1,4 @@
-package com.github.mkoshikov.homecamera.models
+package com.github.mkoshikov.homecamera.model
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
