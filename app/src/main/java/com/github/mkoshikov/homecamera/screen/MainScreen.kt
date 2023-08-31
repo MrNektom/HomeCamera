@@ -4,6 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
@@ -31,6 +32,7 @@ fun MainScreen(model: MainViewModel = koinViewModel()) {
         topBar = {
             Column {
                 TopAppBar(
+                    backgroundColor = MaterialTheme.colors.surface,
                     title = {
                         Text(text = stringResource(id = R.string.app_name))
                     },
@@ -38,6 +40,7 @@ fun MainScreen(model: MainViewModel = koinViewModel()) {
                 val selectedTab = MainScreenTab.values().indexOf(model.tab)
                 TabRow(
                     selectedTabIndex = selectedTab,
+                    backgroundColor = MaterialTheme.colors.surface,
                     indicator = {
                         TabRowDefaults.Indicator(
                             modifier = Modifier
@@ -68,8 +71,8 @@ fun MainScreen(model: MainViewModel = koinViewModel()) {
         Crossfade(
             targetState = model.tab,
             label = "main_tabs"
-            ) {
-            when(it) {
+        ) {
+            when (it) {
                 MainScreenTab.Cameras -> MainScreenCamerasTab(padding)
                 MainScreenTab.Doors -> MainScreenDoorsTab(padding)
             }

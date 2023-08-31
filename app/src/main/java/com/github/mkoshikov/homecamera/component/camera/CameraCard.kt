@@ -1,5 +1,8 @@
 package com.github.mkoshikov.homecamera.component.camera
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,15 +23,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.size.Size
 import com.github.mkoshikov.homecamera.component.SwipeState
 import com.github.mkoshikov.homecamera.component.SwipeToAction
 import com.github.mkoshikov.homecamera.repository.`object`.Camera
+import com.github.mkoshikov.homecamera.util.isSuccess
 import kotlinx.coroutines.launch
 
 val StarColor = Color(224, 190, 53)
@@ -64,10 +72,24 @@ fun CameraCard(
     ) {
         Card {
             Column {
-                AsyncImage(
-                    model = camera.snapshot,
+                val painter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(camera.snapshot)
+                        .size(Size.ORIGINAL)
+                        .build(),
+                )
+                Image(
+                    painter = painter,
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animateContentSize()
+                        .alpha(
+                            animateFloatAsState(
+                                if (painter.state.isSuccess()) 1f else 0f,
+                                label = ""
+                            ).value
+                        ),
                     contentScale = ContentScale.FillWidth
                 )
                 Text(

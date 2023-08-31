@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.github.mkoshikov.homecamera.component.FullSizeCircularProgressIndicator
 import com.github.mkoshikov.homecamera.component.door.DoorCard
+import com.github.mkoshikov.homecamera.component.door.DoorEditingDialog
 import com.github.mkoshikov.homecamera.model.main.DoorsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -32,6 +33,7 @@ fun MainScreenDoorsTab(
 ) {
     val doors by model.doors.collectAsState()
     val error = model.error
+    val editing = model.editing
 
     val pullRefreshState = rememberPullRefreshState(
         refreshing = model.refreshing,
@@ -69,7 +71,12 @@ fun MainScreenDoorsTab(
             modifier = Modifier.fillMaxSize()
         ) {
             items(doors) { door ->
-                DoorCard(door = door)
+                DoorCard(
+                    door = door,
+                    onStartEditing = model::editing::set,
+                    onUpdateFavorites = model::updateDoorFavorites,
+                    onUpdateLocked = model::updateDoorLocked
+                    )
             }
         }
 
@@ -78,6 +85,14 @@ fun MainScreenDoorsTab(
             state = pullRefreshState,
             modifier = Modifier
                 .align(Alignment.TopCenter)
+        )
+    }
+
+    if (editing != null) {
+        DoorEditingDialog(
+            door = editing,
+            onDismissRequest = { model.editing = null },
+            onUpdateName = model::updateDoorName
         )
     }
 }

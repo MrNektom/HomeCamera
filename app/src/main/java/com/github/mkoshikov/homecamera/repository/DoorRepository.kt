@@ -6,7 +6,6 @@ import io.realm.kotlin.Realm
 import io.realm.kotlin.delete
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.map
-import kotlin.jvm.Throws
 
 
 class DoorRepository(
@@ -35,4 +34,16 @@ class DoorRepository(
         .find()
         .asFlow()
         .map { it.list }
+
+    fun updateDoorName(door: Door, name: String) = realm.writeBlocking {
+        findLatest(door)?.name = name
+    }
+
+    fun updateDoorFavorites(door: Door, favorites: Boolean) = realm.writeBlocking {
+        findLatest(door)?.favorites = favorites
+    }
+
+    fun updateDoorLocked(door: Door, locked: Boolean) = realm.writeBlocking {
+        findLatest(door)?.locked = locked
+    }
 }

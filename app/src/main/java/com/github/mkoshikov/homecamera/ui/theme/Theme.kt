@@ -18,8 +18,8 @@ private val DarkColorScheme = darkColors(
 )
 
 private val LightColorScheme = lightColors(
-    primary = Color.White,
-    onPrimary = Color(0xFF1D1D1D)
+    primary = BrandColor,
+    onPrimary = Color(0xFFFFFFFF)
 )
 
 @Composable
@@ -35,7 +35,7 @@ fun HomeCameraTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            val color = colorScheme.primary.toArgb()
+            val color = colorScheme.surface.toArgb()
             window.statusBarColor = color
             WindowCompat
                 .getInsetsController(window, view)

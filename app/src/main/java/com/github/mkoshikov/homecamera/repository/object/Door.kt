@@ -8,4 +8,5 @@ class Door : RealmObject {
     var room: String? = null
     var favorites: Boolean = false
     var snapshot: String? = null
+    var locked: Boolean = false
 }

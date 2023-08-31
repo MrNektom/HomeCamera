@@ -2,4 +2,6 @@
     <string name="app_name">My home</string>
     <string name="cameras">Cameras</string>
     <string name="doors">Doors</string>
+    <string name="door_editing_title">Editing door name</string>
+    <string name="name">Name</string>
 </resources>
